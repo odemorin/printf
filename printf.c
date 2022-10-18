@@ -19,61 +19,64 @@ static int (*check_for_specifiers(const char *format))(va_list)
 
 {
 
-	 unsigned int i;
+		unsigned int i;
 
-	  print_t p[] = {
+			print_t p[] = {
 
-		  					{"c", print_c},
+						{"c", print_c},
 
-												{"s", print_s},
+								{"s", print_s},
 
-																	{"i", print_i},
+										{"i", print_i},
 
-																						{"d", print_d},
+												{"d", print_d},
 
-																											{"u", print_u},
+														{"u", print_u},
 
-																																{"b", print_b},
+																{"b", print_b},
 
-																																					{"o", print_o},
+																		{"o", print_o},
 
-																																										{"x", print_x},
+																				{"x", print_x},
 
-																																															{"X", print_X},
+																						{"X", print_X},
 
-																																																				{"p", print_p},
+																								{"p", print_p},
 
-																																																									{"S", print_S},
+																										{"S", print_S},
 
-																																																														{"r", print_r},
+																												{"r", print_r},
 
-																																																																			{"R", print_R},
+																														{"R", print_R},
 
-																																																																								{NULL, NULL}};
+																																{NULL, NULL}
+
+							};
 
 
 
-	   for (i = 0; p[i].t != NULL; i++)
+				for (i = 0; p[i].t != NULL; i++)
 
-		    {
+						{
 
-			    		if (*(p[i].t) == *format)
+									if (*(p[i].t) == *format)
 
-								{
+												{
 
-												break;
+																break;
 
-														}
+																		}
 
-					 }
+										}
 
-	    return (p[i].f);
+					return (p[i].f);
 
 }
 
 
 
 /**
+ *
  * _printf - prints anything
  *
  *   * @format: list of argument types passed to the function
@@ -88,74 +91,72 @@ int _printf(const char *format, ...)
 
 {
 
-	 unsigned int i = 0, count = 0;
+		unsigned int i = 0, count = 0;
 
-	  va_list valist;
+			va_list valist;
 
-	   int (*f)(va_list);
+				int (*f)(va_list);
 
 
 
-	    if (format == NULL)
+					if (format == NULL)
 
-		    		return (-1);
+								return (-1);
 
-	     va_start(valist, format);
+						va_start(valist, format);
 
-	      while (format[i])
+							while (format[i])
 
-		       {
+									{
 
-			       		for (; format[i] != '%' && format[i]; i++)
+												for (; format[i] != '%' && format[i]; i++)
 
-								{
+															{
 
-												_putchar(format[i]);
+																			_putchar(format[i]);
 
-															count++;
+																						count++;
 
-																	}
+																								}
 
-							if (!format[i])
+														if (!format[i])
 
-											return (count);
+																		return (count);
 
-									f = check_for_specifiers(&format[i + 1]);
+																f = check_for_specifiers(&format[i + 1]);
 
-											if (f != NULL)
+																		if (f != NULL)
 
-														{
+																					{
 
-																		count += f(valist);
+																									count += f(valist);
 
-																					i += 2;
+																												i += 2;
 
-																								continue;
+																															continue;
 
-																										}
+																																	}
 
-													if (!format[i + 1])
+																				if (!format[i + 1])
 
-																	return (-1);
+																								return (-1);
 
-															_putchar(format[i]);
+																						_putchar(format[i]);
 
-																	count++;
+																								count++;
 
-																			if (format[i + 1] == '%')
+																										if (format[i + 1] == '%')
 
-																							i += 2;
+																														i += 2;
 
-																					else
+																												else
 
-																									i++;
+																																i++;
 
-																					 }
+																													}
 
-	       va_end(valist);
+								va_end(valist);
 
-	        return (count);
+									return (count);
 
 }
-
-
